@@ -1,10 +1,11 @@
 module srlatchgatelevelmodel(input s,r,output q,qbar);
-    nor(qbar,s,q);
-    nor(q,r,qbar);
+    nor(qbar,s,q,e);
+    nor(q,r,e,qbar);
 endmodule
 
-module srlatchbehaviourlevel(input s,r, output reg q,qbar);
+module srlatchbehaviourlevel(input s,r,e, output reg q,qbar);
     always @(*) begin
+        if (e)
         case ({s,r})
             2'b11: {q,qbar}<=2'bxx; //invalid
             2'b10: {q,qbar}<=2'b10; //set
@@ -12,28 +13,21 @@ module srlatchbehaviourlevel(input s,r, output reg q,qbar);
             2'b00: {q,qbar}<={q,qbar}; //hold
             default: {q,qbar}<=2'bxx; 
         endcase
+        else    
+            {q,qbar} <={q,qbar};
     end
 endmodule
 
 module srlatchtb;
-    reg s,r;
+    reg s,r,e;
     wire q,qbar;
     integer m;
-    srlatchbehaviourlevel s2(s,r,q,qbar);
+    srlatchbehaviourlevel s2(s,r,e,q,qbar);
     initial begin
-        $monitor("%b     %b     %b     %b",s,r,q,qbar);
-        for (m=3;m>=0;m=m-1) begin
-            {s,r} <= m;
+        $monitor("%b     %b     %b     %b     %b",e,s,r,q,qbar);
+        for (m=7;m>=0;m=m-1) begin
+            {e,s,r} <= m;
             #1;
         end
-        $display("   ");
-        {s,r} <= 2'b11;
-        #1;
-        {s,r} <= 2'b01;
-        #1;
-        {s,r} <= 2'b10;
-        #1;
-        {s,r} <= 2'b00;
-        #1;
     end
 endmodule
