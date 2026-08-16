@@ -26,7 +26,7 @@ module srlatchtb;
     initial begin
         $monitor("%b     %b     %b     %b     %b",e,s,r,q,qbar);
         for (m=0;m<8;m=m+1) begin
-            {e,s,r} <= m;
+            {e,s,r} = m;
             #1;
         end
     end
