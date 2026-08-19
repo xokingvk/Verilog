@@ -1,10 +1,18 @@
 module dlatchgatelevel (input clk,d,output q,qbar);
-    wire w1,w2,d0;
+    wire w1,w2,w3,w4,d0,clkinv,mq,mqbar;
     not(d0,d);
+    not(clkinv,clk);
+    //master
     and(w1,d0,clk);
     and(w2,d,clk);
-    nor(q,w1,qbar);
-    nor(qbar,w2,q);
+    nor(mq,w1,mqbar);
+    nor(mqbar,w2,mq);
+
+    and(w3,mq,clkinv);
+    and(w4,mqbar,clkinv);
+    //slave
+    nor(q,w3,qbar);
+    nor(qbar,w4,q);
 endmodule
 
 module dlatchbehaviourlevel (input clk,d, output reg q,qbar);

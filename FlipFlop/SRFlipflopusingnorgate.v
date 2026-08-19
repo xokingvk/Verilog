@@ -1,9 +1,17 @@
 module srflipflopgatelevel(input s,r,clk, output q,qbar);
-    wire w1,w2;
-    nor(w1,s,clk);
-    nor(w2,r,clk);
-    nor(q,w1,qbar);
-    nor(qbar,w2,q);
+    wire w1,w2,w3,w4,mq,mqbar;
+    not (clkinv,clk);
+    //master
+    nand(w1,s,clk);
+    nand(w2,r,clk);
+    nand(mq,w1,mqbar);
+    nand(mqbar,w2,mq);
+
+    nand(w3,mq,clkinv);
+    nand(w4,mq,clkinv);
+    //slave
+    nand(q,w3,qbar);
+    nand(qbar,w4,q);
 endmodule
 
 module srflipflopbehaviourmodel (input s,r,clk, output reg q,qbar);

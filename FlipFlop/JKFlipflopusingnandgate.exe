@@ -1,0 +1,44 @@
+#! c:/iverilog-x86/bin/vvp
+:ivl_version "10.0 (stable)" "(v10_0)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision + 0;
+:vpi_module "system";
+:vpi_module "vhdl_sys";
+:vpi_module "v2005_math";
+:vpi_module "va_math";
+S_003d3888 .scope module, "jkflipflopgatelevel" "jkflipflopgatelevel" 2 1;
+ .timescale 0 0;
+    .port_info 0 /INPUT 1 "j"
+    .port_info 1 /INPUT 1 "k"
+    .port_info 2 /INPUT 1 "clk"
+    .port_info 3 /OUTPUT 1 "q"
+    .port_info 4 /OUTPUT 1 "qbar"
+o00650bec .functor BUFZ 1, C4<z>; HiZ drive
+L_0067fc50 .functor NOT 1, o00650bec, C4<0>, C4<0>, C4<0>;
+o00650c1c .functor BUFZ 1, C4<z>; HiZ drive
+L_0067fc98 .functor NAND 1, o00650c1c, o00650bec, L_0067fe90, C4<1>;
+o00650c34 .functor BUFZ 1, C4<z>; HiZ drive
+L_0067fce0 .functor NAND 1, o00650c34, o00650bec, L_0067fe48, C4<1>;
+L_0067fd28 .functor NAND 1, L_0067fc98, L_0067fd70, C4<1>, C4<1>;
+L_0067fd70 .functor NAND 1, L_0067fd28, C4<1>, C4<1>, C4<1>;
+L_0067fdb8 .functor NAND 1, L_0067fd28, L_0067fc50, C4<1>, C4<1>;
+L_0067fe00 .functor NAND 1, L_0067fd70, L_0067fc50, C4<1>, C4<1>;
+L_0067fe48 .functor NAND 1, L_0067fdb8, L_0067fe90, C4<1>, C4<1>;
+L_0067fe90 .functor NAND 1, L_0067fe00, L_0067fe48, C4<1>, C4<1>;
+v003d3958_0 .net "clk", 0 0, o00650bec;  0 drivers
+v003df848_0 .net "clkinv", 0 0, L_0067fc50;  1 drivers
+v003df8a0_0 .net "j", 0 0, o00650c1c;  0 drivers
+v003df8f8_0 .net "k", 0 0, o00650c34;  0 drivers
+v003df950_0 .net "mq", 0 0, L_0067fd28;  1 drivers
+v003df9a8_0 .net "mqbar", 0 0, L_0067fd70;  1 drivers
+v003dfa00_0 .net "q", 0 0, L_0067fe48;  1 drivers
+v0067ebf8_0 .net "qbar", 0 0, L_0067fe90;  1 drivers
+v0067ec68_0 .net "w1", 0 0, L_0067fc98;  1 drivers
+v0067ecc0_0 .net "w2", 0 0, L_0067fce0;  1 drivers
+v0067ed18_0 .net "w3", 0 0, L_0067fdb8;  1 drivers
+v0067ed70_0 .net "w4", 0 0, L_0067fe00;  1 drivers
+# The file index is used to find the file name in the following table.
+:file_names 3;
+    "N/A";
+    "<interactive>";
+    "JKFlipflopusingnandgate.v";

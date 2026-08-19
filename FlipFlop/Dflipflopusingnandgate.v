@@ -1,11 +1,20 @@
 module dflipflopgatelevel(input clk, d,output q,qbar);
-    wire w1,w2;
-    wire d0;
+    wire w1,w2,w3,w4,mq,mqbar;
+    wire d0,clkinv;
     not(d0,d);
+    not(clkinv,clk);
+    //master
     nand(w1,d,clk);
-    nand(w1,d0,clk);
-    nand(q,w1,qbar);
-    nand(qbar,w2,q);
+    nand(w2,d0,clk);
+    nand(mq,w1,mqbar);
+    nand(mqbar,w2,mq);
+
+    nand(w3,mq,clkinv);
+    nand(w4,mqbar,clkinv);
+
+    //slave
+    nand(q,w3,qbar);
+    nand(qbar,w4,q);
 endmodule
 
 module dlatchbehaviourlevel(input clk,d,output reg q,qbar);
